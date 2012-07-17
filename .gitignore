@@ -1,0 +1,6 @@
+*.o
+bin/
+moc_*.cpp
+*.swp
+*.bak
+*.pro.user
