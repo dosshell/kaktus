@@ -1,6 +1,6 @@
-minwk
+Kaktus
 =====
-Minimalist WebKit
+The Kaktus browser
 
 What it is
 ----------
