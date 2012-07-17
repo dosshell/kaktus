@@ -18,11 +18,15 @@ Browser::Browser(QWidget *parent) :
     connect(command_bar, SIGNAL(returnPressed()), SLOT(changeLocation()));
     connect(view, SIGNAL(loadFinished(bool)), this, SLOT(finishLoading(bool)));
 
-    connect(view,SIGNAL(loadProgress(int)),this,SLOT(showProgress(int)));
-
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(showLocation()));
     command_bar->setVisible(false);
+
+    /* Show loading progress */
+    connect(view,SIGNAL(loadProgress(int)),this,SLOT(showProgress(int)));
+
+    /* Update title */
+    connect(view,SIGNAL(titleChanged(QString)),this,SLOT(setWindowTitle(QString)));
 
     //Layout
     QVBoxLayout *mainLayout = new QVBoxLayout;
