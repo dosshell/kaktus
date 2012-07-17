@@ -1,16 +1,16 @@
 #include <QApplication>
 #include "mainwindow.h"
 
-int main(int argc, char *argv[])
-{
-    QApplication a(argc, argv);
+int main(int argc, char *argv[]){
 
-    MainWindow *w = new MainWindow();
+    QApplication q_application(argc, argv);
+
+    MainWindow *window = new MainWindow();
     #if defined Q_OS_SYMBIAN || defined Q_WS_HILDON || defined Q_WS_MAEMO_5 || defined Q_WS_SIMULATOR
-        w->showMaximized();
+        window->showMaximized();
     #else
-        w->show();
+        window->show();
     #endif
     
-    return a.exec();
+    return q_application.exec();
 }

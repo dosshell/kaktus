@@ -18,11 +18,13 @@ protected slots:
     void changeLocation();
     void showLocation();
     void finishLoading(bool);
+    void setWindowTitle(QString);
 
 private:
     int progress;
     CommandBar* command_bar;
     QWebView* view;
+    QWidget* parent;
 
 signals:
     

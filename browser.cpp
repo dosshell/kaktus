@@ -1,9 +1,11 @@
 #include "browser.h"
 
+
 Browser::Browser(QWidget *parent) :
     QWidget(parent)
 {
     progress = 0;
+    this->parent = parent;
 
     //View
     view = new QWebView(this);
@@ -33,10 +35,12 @@ Browser::Browser(QWidget *parent) :
     setLayout(mainLayout);
 
     //Startup
-    view->load(QUrl("http://www.google.com"));
-
+    view->load(QUrl("https://www.google.com"));
 }
 
+void Browser::setWindowTitle(QString title){
+    parent->setWindowTitle("Kaktus - " + title); 
+}
 
 void Browser::showLocation()
 {
@@ -54,14 +58,11 @@ void Browser::changeLocation()
 }
 
 //Kod ska flyttas till commandbar
-void Browser::finishLoading(bool success)
-{
-    if (success == true)
-    {
-
+void Browser::finishLoading(bool success){
+    if (success == true){
+	setWindowTitle(view->title());
     }
-    else
-    {
+    else{
         bool is_http = command_bar->text().startsWith("http:");
         bool is_https = command_bar->text().startsWith("https:");
 
