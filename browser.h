@@ -19,6 +19,7 @@ protected slots:
     void showLocation();
     void finishLoading(bool);
     void setWindowTitle(QString);
+    void showProgress(int);
 
 private:
     int progress;
