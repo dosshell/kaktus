@@ -4,7 +4,7 @@ The Kaktus browser
 
 What it is
 ----------
-MinWK is a minimalist webbrowser based on webkit. It targets platform which uses tiled based windows managers.
+Kaktus is a minimalist webbrowser based on webkit. It targets platform which uses tiled based windows managers.
 
 What it isn't
 -------------
