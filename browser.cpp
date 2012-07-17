@@ -55,7 +55,7 @@ void Browser::finishLoading(bool success)
     }
     else
     {
-        if (!command_bar->text().startsWith("http://") ||
+        if (!command_bar->text().startsWith("http://") &&
                 !command_bar->text().startsWith("https://"))
         {
             command_bar->setText(command_bar->text().prepend("http://"));
