@@ -10,6 +10,8 @@ Browser::Browser(QWidget *parent) :
 
     //Commandbar
     connect(command_bar, SIGNAL(returnPressed()), SLOT(changeLocation()));
+    connect(view, SIGNAL(loadFinished(bool)), this, SLOT(finishLoading(bool)));
+
     QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L), this);
     connect(shortcut, SIGNAL(activated()), this, SLOT(showLocation()));
     command_bar->setVisible(false);
@@ -47,6 +49,7 @@ void Browser::changeLocation()
     view->load(url);
 }
 
+//Kod ska flyttas till commandbar
 void Browser::finishLoading(bool success)
 {
     if (success == true)
@@ -55,10 +58,19 @@ void Browser::finishLoading(bool success)
     }
     else
     {
-        if (!command_bar->text().startsWith("http://") &&
-                !command_bar->text().startsWith("https://"))
+        bool is_http = command_bar->text().startsWith("http:");
+        bool is_https = command_bar->text().startsWith("https:");
+
+        //If no http(s) try htpps
+        if (!(is_http || is_https))
         {
-            command_bar->setText(command_bar->text().prepend("http://"));
+            command_bar->setText(command_bar->text().prepend("https://"));
+            changeLocation();
+        }
+        //Try http
+        else if (is_https)
+        {
+            command_bar->setText(command_bar->text().remove(0, QString("https:").length()).prepend("http:"));
             changeLocation();
         }
         else
