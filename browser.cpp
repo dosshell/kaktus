@@ -5,10 +5,14 @@ Browser::Browser(QWidget *parent) :
 {
     progress = 0;
 
+    //View
     view = new QWebView(this);
-    command_bar = new CommandBar(this);
+    view->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
+    view->settings()->setAttribute(QWebSettings::JavaEnabled, true);
+    view->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
 
     //Commandbar
+    command_bar = new CommandBar(this);
     connect(command_bar, SIGNAL(returnPressed()), SLOT(changeLocation()));
     connect(view, SIGNAL(loadFinished(bool)), this, SLOT(finishLoading(bool)));
 
