@@ -4,7 +4,7 @@
 #
 #-------------------------------------------------
 
-QT       += core gui webkit
+QT       += core gui webkit network
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
@@ -20,3 +20,5 @@ SOURCES += main.cpp\
 HEADERS  += mainwindow.h \
     browser.h \
     commandbar.h
+
+OTHER_FILES +=

@@ -1,6 +1,7 @@
 #include "commandbar.h"
 
-CommandBar::CommandBar(QWidget *parent = 0) : QLineEdit(parent)
+CommandBar::CommandBar(QWidget *parent) :
+    QLineEdit(parent)
 {
 
 }
