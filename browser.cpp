@@ -97,8 +97,8 @@ void Browser::finishLoading(bool success){
             command_bar->setText(command_bar->text().prepend("http://"));
             changeLocation();
         }
-        //If https failed try http
-        else if (is_https)
+        //If http failed try https
+        else if (is_http)
         {
             command_bar->setText(command_bar->text().remove(0, QString("http:").length()).prepend("https:"));
             changeLocation();
