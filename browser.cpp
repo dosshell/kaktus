@@ -23,10 +23,10 @@ Browser::Browser(QWidget *parent) :
     command_bar->setVisible(false);
 
     /* Show loading progress */
-    connect(view,SIGNAL(loadProgress(int)),this,SLOT(showProgress(int)));
+    connect(view, SIGNAL(loadProgress(int)), this, SLOT(showProgress(int)));
 
     /* Update title */
-    connect(view,SIGNAL(titleChanged(QString)),this,SLOT(setWindowTitle(QString)));
+    connect(view, SIGNAL(titleChanged(QString)), this, SLOT(updateWindowTitle()));
 
     //Layout
     QVBoxLayout *mainLayout = new QVBoxLayout;
@@ -46,15 +46,20 @@ Browser::Browser(QWidget *parent) :
 
 void Browser::updateWindowTitle()
 {
-
+    if (progress <= 0 || progress >= 100)
+        setWindowTitle(view->title());
+    else
+        setWindowTitle(QString("%1 (%2%)").arg(view->title()).arg(progress));
 }
 
-void Browser::setWindowTitle(QString title){
-    parent->setWindowTitle("Kaktus - " + title); 
+void Browser::setWindowTitle(const QString &title)
+{
+    parent->setWindowTitle(title);
 }
 
-void Browser::showProgress(int progress){
-    setWindowTitle( QString("Loading: %1 %").arg(progress,0,10) );
+void Browser::showProgress(int p){
+    progress = p;
+    updateWindowTitle();
 }
 
 void Browser::showLocation()
@@ -75,7 +80,7 @@ void Browser::changeLocation()
 //Kod ska flyttas till commandbar
 void Browser::finishLoading(bool success){
     if (success == true){
-        setWindowTitle(view->title());
+        updateWindowTitle();
     }
     else{
         bool is_http = command_bar->text().startsWith("http:");

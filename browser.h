@@ -18,9 +18,9 @@ protected slots:
     void changeLocation();
     void showLocation();
     void finishLoading(bool);
-    void setWindowTitle(QString);
     void showProgress(int);
     void updateWindowTitle();
+    void setWindowTitle(const QString &title);
 
 private:
     int progress;
