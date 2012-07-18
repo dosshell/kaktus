@@ -34,6 +34,7 @@ Browser::Browser(QWidget *parent) :
 
     //Layout
     QVBoxLayout *mainLayout = new QVBoxLayout;
+
     mainLayout->setMargin(0);
     mainLayout->setSpacing(0);
 
@@ -93,13 +94,13 @@ void Browser::finishLoading(bool success){
         //If no http(s) try htpps
         if (!(is_http || is_https))
         {
-            command_bar->setText(command_bar->text().prepend("https://"));
+            command_bar->setText(command_bar->text().prepend("http://"));
             changeLocation();
         }
         //If https failed try http
         else if (is_https)
         {
-            command_bar->setText(command_bar->text().remove(0, QString("https:").length()).prepend("http:"));
+            command_bar->setText(command_bar->text().remove(0, QString("http:").length()).prepend("https:"));
             changeLocation();
         }
         else
