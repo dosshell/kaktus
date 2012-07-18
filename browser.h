@@ -6,6 +6,7 @@
 #include <QtWebKit>
 #include <QtNetwork>
 #include <QtGui>
+#include <QAction>
 
 class Browser : public QWidget
 {

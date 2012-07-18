@@ -16,16 +16,20 @@ Browser::Browser(QWidget *parent) :
     //Commandbar
     command_bar = new CommandBar(this);
     connect(command_bar, SIGNAL(returnPressed()), SLOT(changeLocation()));
-    connect(view, SIGNAL(loadFinished(bool)), this, SLOT(finishLoading(bool)));
 
-    QShortcut *shortcut = new QShortcut(QKeySequence(Qt::CTRL + Qt::Key_L), this);
-    connect(shortcut, SIGNAL(activated()), this, SLOT(showLocation()));
+    //action and shortcuts for open commandbar
+    QAction *open_cb = new QAction(this);
+    QList<QKeySequence> ocb_l;
+    ocb_l << QKeySequence(Qt::CTRL + Qt::Key_L) << QKeySequence(Qt::SHIFT + Qt::Key_Period);
+    open_cb->setShortcuts(ocb_l);
+    addAction(open_cb);
+
+    connect(open_cb, SIGNAL(triggered()), this, SLOT(showLocation()));
     command_bar->setVisible(false);
 
-    /* Show loading progress */
+    /* Show loading progress adn stuff */
     connect(view, SIGNAL(loadProgress(int)), this, SLOT(showProgress(int)));
-
-    /* Update title */
+    connect(view, SIGNAL(loadFinished(bool)), this, SLOT(finishLoading(bool)));
     connect(view, SIGNAL(titleChanged(QString)), this, SLOT(updateWindowTitle()));
 
     //Layout
