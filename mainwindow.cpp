@@ -1,9 +1,9 @@
 #include "mainwindow.h"
 
-MainWindow::MainWindow(QWidget *parent)
+MainWindow::MainWindow(int argc,char** argv, QWidget *parent)
     : QMainWindow(parent)
 {
-    browser = new Browser(this);
+    browser = new Browser(argc,argv,this);
     setCentralWidget(browser);
 }
 

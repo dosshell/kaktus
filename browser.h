@@ -12,7 +12,7 @@ class Browser : public QWidget
 {
     Q_OBJECT
 public:
-    explicit Browser(QWidget *parent = 0);
+    explicit Browser(int argc,char** argv,QWidget *parent = 0);
 
 
 protected slots:

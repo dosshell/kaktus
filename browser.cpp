@@ -1,7 +1,7 @@
 #include "browser.h"
 
 
-Browser::Browser(QWidget *parent) :
+Browser::Browser(int argc,char** argv,QWidget *parent) :
     QWidget(parent)
 {
     progress = 0;
@@ -45,7 +45,10 @@ Browser::Browser(QWidget *parent) :
     setLayout(mainLayout);
 
     //Startup
-    view->load(QUrl("https://www.google.com"));
+    if(argc > 1)
+      view->load(QUrl(argv[1]));
+    else
+      view->load(QUrl("https://www.google.com"));
 }
 
 void Browser::updateWindowTitle()
