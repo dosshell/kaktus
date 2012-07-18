@@ -53,13 +53,12 @@ void Browser::updateWindowTitle()
     if (progress <= 0 || progress >= 100)
         setWindowTitle(view->title());
     else
-        setWindowTitle(QString("Kaktus - %1 (%2%)").arg(view->title()).arg(progress));
+        setWindowTitle(QString("%1 (%2%)").arg(view->title()).arg(progress));
 }
 
 void Browser::setWindowTitle(const QString &title)
 {
-    if (parent != 0)
-        parent->setWindowTitle(title);
+    parent->setWindowTitle(QString("Kaktus - ") + title);
 }
 
 void Browser::showProgress(int p){
