@@ -7,7 +7,8 @@ MainWindow::MainWindow(QWidget *parent)
     setCentralWidget(browser);
 }
 
+
 MainWindow::~MainWindow()
 {
-    
+
 }

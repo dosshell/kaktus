@@ -49,12 +49,13 @@ void Browser::updateWindowTitle()
     if (progress <= 0 || progress >= 100)
         setWindowTitle(view->title());
     else
-        setWindowTitle(QString("%1 (%2%)").arg(view->title()).arg(progress));
+        setWindowTitle(QString("Kaktus - %1 (%2%)").arg(view->title()).arg(progress));
 }
 
 void Browser::setWindowTitle(const QString &title)
 {
-    parent->setWindowTitle(title);
+    if (parent != 0)
+        parent->setWindowTitle(title);
 }
 
 void Browser::showProgress(int p){
@@ -92,7 +93,7 @@ void Browser::finishLoading(bool success){
             command_bar->setText(command_bar->text().prepend("https://"));
             changeLocation();
         }
-        //Try http
+        //If https failed try http
         else if (is_https)
         {
             command_bar->setText(command_bar->text().remove(0, QString("https:").length()).prepend("http:"));
