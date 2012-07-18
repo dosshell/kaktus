@@ -44,6 +44,11 @@ Browser::Browser(QWidget *parent) :
     view->load(QUrl("https://www.google.com"));
 }
 
+void Browser::updateWindowTitle()
+{
+
+}
+
 void Browser::setWindowTitle(QString title){
     parent->setWindowTitle("Kaktus - " + title); 
 }
