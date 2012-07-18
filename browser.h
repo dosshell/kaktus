@@ -14,10 +14,8 @@ class Browser : public QWidget
 public:
     explicit Browser(QWidget *parent = 0);
 
-
 protected slots:
-    void changeLocation();
-    void showLocation();
+    void setUrl(QUrl url);
     void finishLoading(bool);
     void showProgress(int);
     void updateWindowTitle();
@@ -28,7 +26,7 @@ private:
     CommandBar* command_bar;
     QWebView* view;
     QWidget* parent;
-
+    QString last_requested_url;
 signals:
     
 public slots:

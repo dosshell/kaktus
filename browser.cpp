@@ -15,7 +15,7 @@ Browser::Browser(QWidget *parent) :
 
     //Commandbar
     command_bar = new CommandBar(this);
-    connect(command_bar, SIGNAL(returnPressed()), SLOT(changeLocation()));
+    connect(command_bar, SIGNAL(triggerUrl(QUrl)), SLOT(setUrl(QUrl)));
 
     //action and shortcuts for open commandbar
     QAction *open_cb = new QAction(this);
@@ -24,8 +24,7 @@ Browser::Browser(QWidget *parent) :
     open_cb->setShortcuts(ocb_l);
     addAction(open_cb);
 
-    connect(open_cb, SIGNAL(triggered()), this, SLOT(showLocation()));
-    command_bar->setVisible(false);
+    connect(open_cb, SIGNAL(triggered()), command_bar, SLOT(requestInput()));
 
     /* Show loading progress adn stuff */
     connect(view, SIGNAL(loadProgress(int)), this, SLOT(showProgress(int)));
@@ -47,6 +46,7 @@ Browser::Browser(QWidget *parent) :
 
     //Startup
     view->load(QUrl("https://www.google.com"));
+    last_requested_url = "https://www.google.com";
 }
 
 void Browser::updateWindowTitle()
@@ -67,18 +67,10 @@ void Browser::showProgress(int p){
     updateWindowTitle();
 }
 
-void Browser::showLocation()
+void Browser::setUrl(QUrl url)
 {
-    command_bar->setVisible(!command_bar->isVisible());
-    command_bar->selectAll();
-    command_bar->setFocus();
-}
-
-void Browser::changeLocation()
-{
-    QUrl url = QUrl(command_bar->text());
-    command_bar->setVisible(false);
-    view->setFocus();
+    //view->stop(); //Behhövs den??
+    last_requested_url = url.toString();
     view->load(url);
 }
 
@@ -88,26 +80,17 @@ void Browser::finishLoading(bool success){
         updateWindowTitle();
     }
     else{
-        bool is_http = command_bar->text().startsWith("http:");
-        bool is_https = command_bar->text().startsWith("https:");
+        bool is_http = last_requested_url.startsWith("http:");
+        bool is_https = last_requested_url.startsWith("https:");
 
-        //If no http(s) try htpps
+        //If no http(s) try http
         if (!(is_http || is_https))
         {
-            command_bar->setText(command_bar->text().prepend("http://"));
-            changeLocation();
-        }
-        //If http failed try https
-        else if (is_http)
-        {
-            command_bar->setText(command_bar->text().remove(0, QString("http:").length()).prepend("https:"));
-            changeLocation();
+            setUrl(last_requested_url.prepend("http://"));
         }
         else
         {
-            command_bar->setVisible(true);
-            command_bar->setFocus();
-            command_bar->selectAll();
+            command_bar->requestReInput();
         }
     }
 }
