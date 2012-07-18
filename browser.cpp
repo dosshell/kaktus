@@ -70,7 +70,7 @@ void Browser::changeLocation()
 //Kod ska flyttas till commandbar
 void Browser::finishLoading(bool success){
     if (success == true){
-	setWindowTitle(view->title());
+        setWindowTitle(view->title());
     }
     else{
         bool is_http = command_bar->text().startsWith("http:");
