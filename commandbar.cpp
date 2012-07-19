@@ -70,6 +70,11 @@ void CommandBar::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key())
     {
+    case Qt::Key_Tab:
+        if (selectedText().length() > 0)
+            setCursorPosition(selectionStart()+selectedText().length());
+        break;
+
     case Qt::Key_Space:
         if (selectedText().length() > 0)
             setCursorPosition(selectionStart()+selectedText().length());
@@ -115,13 +120,14 @@ void CommandBar::execute()
     QString txt = text().trimmed();
     if (txt.length()>0)
     {
-        QString cmd = txt.remove(0, 1);
-        QProcess* procc = new QProcess(this);
+        QString cmd = txt;
+        cmd.remove(0, 1);
+        QProcess* procc;
 
         switch(text().at(0).toAscii())
         {
         case '#':
-
+            procc = new QProcess(this);
             procc->start(cmd);
             break;
 
@@ -131,7 +137,6 @@ void CommandBar::execute()
             break;
 
         default:
-
             emit triggerUrl(QUrl(txt));
             hide();
             break;
