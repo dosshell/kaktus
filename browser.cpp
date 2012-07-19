@@ -4,7 +4,6 @@
 Browser::Browser(int argc,char** argv,QWidget *parent) :
     QWidget(parent)
 {
-    progress = 0;
     this->parent = parent;
 
     //View
@@ -18,16 +17,21 @@ Browser::Browser(int argc,char** argv,QWidget *parent) :
     connect(command_bar, SIGNAL(triggerUrl(QUrl)), SLOT(setUrl(QUrl)));
 
     //action and shortcuts for open commandbar
-    QAction *open_cb = new QAction(this);
-    QList<QKeySequence> ocb_l;
-    ocb_l << QKeySequence(Qt::CTRL + Qt::Key_L) << QKeySequence(Qt::SHIFT + Qt::Key_Period);
-    open_cb->setShortcuts(ocb_l);
-    addAction(open_cb);
+    //QAction *open_cb = new QAction(this);
+    //QList<QKeySequence> ocb_l;
+    //ocb_l << QKeySequence(Qt::CTRL + Qt::Key_L) << QKeySequence(Qt::SHIFT + Qt::Key_Period);
+    //open_cb->setShortcuts(ocb_l);
+    //addAction(open_cb);
 
-    connect(open_cb, SIGNAL(triggered()), command_bar, SLOT(requestInput()));
+    QShortcut* open_cb = new QShortcut(QKeySequence(Qt::Key_L + Qt::CTRL), this);
+    QShortcut* exec_cb = new QShortcut(QKeySequence("#"), this);
+    QShortcut* set_cb = new QShortcut(QKeySequence(":"), this);
+    connect(open_cb, SIGNAL(activated()), command_bar, SLOT(toggleInput()));
+    connect(exec_cb, SIGNAL(activated()), command_bar, SLOT(openExec()));
+    connect(set_cb, SIGNAL(activated()), command_bar, SLOT(openSetting()));
 
     /* Show loading progress adn stuff */
-    connect(view, SIGNAL(loadProgress(int)), this, SLOT(showProgress(int)));
+    connect(view, SIGNAL(loadProgress(int)), this, SLOT(updateWindowTitle(int)));
     connect(view, SIGNAL(loadFinished(bool)), this, SLOT(finishLoading(bool)));
     connect(view, SIGNAL(titleChanged(QString)), this, SLOT(updateWindowTitle()));
 
@@ -51,7 +55,7 @@ Browser::Browser(int argc,char** argv,QWidget *parent) :
         setUrl(QUrl("https://www.google.com"));
 }
 
-void Browser::updateWindowTitle()
+void Browser::updateWindowTitle(int progress)
 {
     if (progress <= 0 || progress >= 100)
         setWindowTitle(view->title());
@@ -64,14 +68,8 @@ void Browser::setWindowTitle(const QString &title)
     parent->setWindowTitle(QString("Kaktus - ") + title);
 }
 
-void Browser::showProgress(int p){
-    progress = p;
-    updateWindowTitle();
-}
-
 void Browser::setUrl(QUrl url)
 {
-    //view->stop(); //Behhövs den??
     last_requested_url = url.toString();
     view->load(url);
 }
@@ -92,7 +90,7 @@ void Browser::finishLoading(bool success){
         }
         else
         {
-            command_bar->requestReInput();
+            command_bar->reInput();
         }
     }
 }

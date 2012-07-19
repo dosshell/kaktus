@@ -5,16 +5,21 @@
 #include <QKeyEvent>
 #include <QUrl>
 #include <QString>
+#include <QProcess>
 
 class CommandBar : public QLineEdit
 {
     Q_OBJECT
 public:
     explicit CommandBar(QWidget *parent = 0);
+    void hide();
+    void show();
 
 public slots:
-    void requestInput(QString prefix = "");
-    void requestReInput();
+    void toggleInput();
+    void reInput();
+    void openExec();
+    void openSetting();
 
 protected slots:
     void keyPressEvent(QKeyEvent *event);
@@ -22,12 +27,14 @@ protected slots:
 
 signals:
     void triggerUrl(QUrl url);
-    void abort();
+    void close();
     void open();
 
 private:
-    void hide();
-    void show();
+    void execute();
+    QStringList url_history;
+    QStringList process_history;
+    QStringList settings_history;
 };
 
 #endif // COMMANDBAR_H

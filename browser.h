@@ -7,6 +7,7 @@
 #include <QtNetwork>
 #include <QtGui>
 #include <QAction>
+#include <QShortcut>
 
 class Browser : public QWidget
 {
@@ -17,12 +18,10 @@ public:
 protected slots:
     void setUrl(QUrl url);
     void finishLoading(bool);
-    void showProgress(int);
-    void updateWindowTitle();
+    void updateWindowTitle(int progress=0);
     void setWindowTitle(const QString &title);
 
 private:
-    int progress;
     CommandBar* command_bar;
     QWebView* view;
     QWidget* parent;
