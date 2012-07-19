@@ -24,7 +24,7 @@ public slots:
 protected slots:
     void keyPressEvent(QKeyEvent *event);
     void focusOutEvent(QFocusEvent *);
-
+    bool event(QEvent *e);
 signals:
     void triggerUrl(QUrl url);
     void close();

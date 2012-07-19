@@ -11,7 +11,13 @@ void CommandBar::toggleInput()
     if (isVisible())
         hide();
     else
+    {
         show();
+        if (text().startsWith(":") || text().startsWith("#"))
+        {
+            //Visa nuvarande url och markera den
+        }
+    }
 }
 
 void CommandBar::reInput()
@@ -46,10 +52,27 @@ void CommandBar::focusOutEvent(QFocusEvent *event)
     QLineEdit::focusOutEvent(event);
 }
 
+
+bool CommandBar::event(QEvent *e)
+{
+    if(e->type() == QEvent::KeyPress)
+    {
+        QKeyEvent *ke = static_cast<QKeyEvent *>(e);
+        keyPressEvent(ke);
+        return true;
+    }
+    else
+        return QLineEdit::event(e);
+
+}
+
 void CommandBar::keyPressEvent(QKeyEvent *event)
 {
     switch(event->key())
     {
+    case Qt::Key_Tab:
+        setCursorPosition(selectionStart()+selectedText().length());
+        break;
 
     case Qt::Key_Backspace:
         // Stäng commandbar om tom annars skicka vidare
@@ -90,7 +113,7 @@ void CommandBar::execute()
     if (text().length()>0)
     {
         QString cmd = text().remove(0, 1);
-QProcess* procc = new QProcess(this);
+        QProcess* procc = new QProcess(this);
 
         switch(text().at(0).toAscii())
         {
