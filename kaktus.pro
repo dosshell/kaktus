@@ -15,10 +15,12 @@ TEMPLATE = app
 SOURCES += main.cpp\
         mainwindow.cpp \
     browser.cpp \
-    commandbar.cpp
+    commandbar.cpp \
+    cookiejar.cpp
 
 HEADERS  += mainwindow.h \
     browser.h \
-    commandbar.h
+    commandbar.h \
+    cookiejar.h
 
 OTHER_FILES +=

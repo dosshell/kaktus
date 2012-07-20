@@ -8,11 +8,11 @@ class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
+  public:
     MainWindow(int argc, char** argv,QWidget *parent = 0);
     ~MainWindow();
 
-private:
+  private:
     Browser *browser;
 };
 
