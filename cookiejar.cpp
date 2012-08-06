@@ -19,13 +19,8 @@ bool CookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const
     QTextStream jf(jarfile);
 
     foreach(QNetworkCookie nc, cookieList)
-    {
       if (!nc.isSessionCookie())
-      {
-        QString data(nc.toRawForm());
-        jf << data << "\n";
-      }
-    }
+        jf << nc.toRawForm() << endl;
   }
 
   return QNetworkCookieJar::setCookiesFromUrl(cookieList, url);
