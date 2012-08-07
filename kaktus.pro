@@ -19,10 +19,11 @@ SOURCES += main.cpp\
     cookiejar.cpp \
     storagemanager.cpp
 
-HEADERS  += mainwindow.h \
-    browser.h \
-    commandbar.h \
-    cookiejar.h \
-    storagemanager.hpp
+HEADERS  += \
+    storagemanager.hpp \
+    mainwindow.hpp \
+    commandbar.hpp \
+    browser.hpp \
+    cookiejar.hpp
 
 OTHER_FILES +=

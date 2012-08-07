@@ -6,12 +6,13 @@
 #include <QUrl>
 #include <QString>
 #include <QProcess>
+#include "storagemanager.hpp"
 
 class CommandBar : public QLineEdit
 {
     Q_OBJECT
   public:
-    explicit CommandBar(QWidget *parent = 0);
+    explicit CommandBar(StorageManager* storemng, QWidget *parent = NULL);
     void hide();
     void show();
 
@@ -32,9 +33,7 @@ class CommandBar : public QLineEdit
 
   private:
     void execute();
-    QStringList url_history;
-    QStringList process_history;
-    QStringList settings_history;
+    StorageManager* storage;
 };
 
 #endif // COMMANDBAR_H

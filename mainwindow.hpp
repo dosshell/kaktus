@@ -2,14 +2,14 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
-#include <browser.h>
+#include <browser.hpp>
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
   public:
-    MainWindow(int argc, char** argv,QWidget *parent = 0);
+    MainWindow(int argc, char** argv,QWidget *parent = NULL);
     ~MainWindow();
 
   private:

@@ -1,4 +1,4 @@
-#include "cookiejar.h"
+#include "cookiejar.hpp"
 
 CookieJar::CookieJar(QObject *parent) :
   QNetworkCookieJar(parent)

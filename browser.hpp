@@ -2,19 +2,19 @@
 #define BROWSER_H
 
 #include <QWidget>
-#include <commandbar.h>
+#include <commandbar.hpp>
 #include <QtWebKit>
 #include <QtNetwork>
 #include <QtGui>
 #include <QAction>
 #include <QShortcut>
-#include <cookiejar.h>
+#include <cookiejar.hpp>
 
 class Browser : public QWidget
 {
     Q_OBJECT
   public:
-    explicit Browser(int argc,char** argv,QWidget *parent = 0);
+    explicit Browser(int argc,char** argv, QWidget *parent = NULL);
 
   protected slots:
     void setUrl(QUrl url);

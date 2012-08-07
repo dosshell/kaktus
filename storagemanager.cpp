@@ -1,5 +1,7 @@
 #include "storagemanager.hpp"
 
-StorageManager::StorageManager()
+StorageManager::StorageManager(QWidget *parent) :
+  QObject(parent)
 {
+
 }

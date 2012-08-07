@@ -1,11 +1,16 @@
-#include "commandbar.h"
+#include "commandbar.hpp"
 
-CommandBar::CommandBar(QWidget *parent) :
-  QLineEdit(parent)
+CommandBar::CommandBar(StorageManager* storemng, QWidget *parent) :
+  QLineEdit(parent), storage(storemng)
 {
   setVisible(false);
   url_history.push_back("www.swedroid.se");
   url_history.push_back("www.sweclockers.com");
+
+  if (store == NULL)
+  {
+    store = new StorageManager();
+  }
 }
 
 void CommandBar::toggleInput()
@@ -15,8 +20,9 @@ void CommandBar::toggleInput()
   else
   {
     show();
-    if (text().startsWith(":") || text().startsWith("#"))
+    if (text().startsWith(":") || text().startsWith("#") || text().isEmpty())
     {
+      setText(url_history.back());
       //Visa nuvarande url och markera den
     }
     selectAll();
@@ -165,6 +171,7 @@ void CommandBar::execute()
         break;
 
       default:
+        url_history.push_back(txt);
         emit triggerUrl(QUrl(txt));
         hide();
         break;

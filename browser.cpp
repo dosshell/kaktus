@@ -1,4 +1,4 @@
-#include "browser.h"
+#include "browser.hpp"
 
 
 Browser::Browser(int argc,char** argv,QWidget *parent) :
