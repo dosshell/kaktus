@@ -4,6 +4,8 @@ CommandBar::CommandBar(QWidget *parent) :
   QLineEdit(parent)
 {
   setVisible(false);
+  url_history.push_back("www.swedroid.se");
+  url_history.push_back("www.sweclockers.com");
 }
 
 void CommandBar::toggleInput()
@@ -17,6 +19,7 @@ void CommandBar::toggleInput()
     {
       //Visa nuvarande url och markera den
     }
+    selectAll();
   }
 }
 
@@ -63,7 +66,6 @@ bool CommandBar::event(QEvent *e)
   }
   else
     return QLineEdit::event(e);
-
 }
 
 void CommandBar::keyPressEvent(QKeyEvent *event)
@@ -110,7 +112,33 @@ void CommandBar::keyPressEvent(QKeyEvent *event)
 
     default:
       //skicka knappen vidare
+      int innan_len = text().length();
       QLineEdit::keyPressEvent(event);
+
+      //Har innehållet ändrats?
+      if (text().length() != innan_len)
+      {
+        //Föreslå nytt ord
+
+        //TODO: Kolla prestanda mot regexp filter()
+        QStringList t;
+        foreach(const QString &url, url_history)
+          if (url.startsWith(text(), Qt::CaseInsensitive))
+            t.push_back(url);
+
+        t.sort();
+        if (t.count() >= 1)
+        {
+          int len = qMin(t.first().length(), t.last().length());
+          int shared = 0;
+          for (; shared<len; ++shared)
+            if (t.first().at(shared).toLower() != t.last().at(shared).toLower())
+              break;
+          int icke_markerat = text().length();
+          setText(t.first().left(shared));
+          setSelection(icke_markerat, text().length()-icke_markerat);
+        }
+      }
       break;
   }
 }

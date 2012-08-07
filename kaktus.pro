@@ -16,11 +16,13 @@ SOURCES += main.cpp\
         mainwindow.cpp \
     browser.cpp \
     commandbar.cpp \
-    cookiejar.cpp
+    cookiejar.cpp \
+    storagemanager.cpp
 
 HEADERS  += mainwindow.h \
     browser.h \
     commandbar.h \
-    cookiejar.h
+    cookiejar.h \
+    storagemanager.hpp
 
 OTHER_FILES +=
