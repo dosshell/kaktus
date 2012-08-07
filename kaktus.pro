@@ -17,13 +17,15 @@ SOURCES += main.cpp\
     browser.cpp \
     commandbar.cpp \
     cookiejar.cpp \
-    storagemanager.cpp
+    storagemanager.cpp \
+    historylist.cpp
 
 HEADERS  += \
     storagemanager.hpp \
     mainwindow.hpp \
     commandbar.hpp \
     browser.hpp \
-    cookiejar.hpp
+    cookiejar.hpp \
+    historylist.hpp
 
 OTHER_FILES +=

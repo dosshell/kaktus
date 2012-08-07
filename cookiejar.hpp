@@ -11,6 +11,10 @@ class CookieJar : public QNetworkCookieJar
   public:
     explicit CookieJar(QObject *parent = NULL);
     bool setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const QUrl &url);
+    void setCookiesFromString(QString str);
+  signals:
+    void receivedCookie(const QList<QNetworkCookie> &cookieList, const QUrl &url);
+
   private:
     QFile* jarfile;
 };

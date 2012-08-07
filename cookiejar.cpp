@@ -14,14 +14,11 @@ CookieJar::CookieJar(QObject *parent) :
 
 bool CookieJar::setCookiesFromUrl(const QList<QNetworkCookie> &cookieList, const QUrl &url)
 {
-  if (jarfile->isOpen())
-  {
-    QTextStream jf(jarfile);
-
-    foreach(QNetworkCookie nc, cookieList)
-      if (!nc.isSessionCookie())
-        jf << nc.toRawForm() << endl;
-  }
-
+  emit receivedCookie(cookieList, url);
   return QNetworkCookieJar::setCookiesFromUrl(cookieList, url);
+}
+
+void CookieJar::setCookiesFromString(QString str)
+{
+  setAllCookies(QNetworkCookie::parseCookies(str.toAscii()));
 }

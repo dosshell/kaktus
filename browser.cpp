@@ -9,10 +9,11 @@ Browser::Browser(int argc,char** argv,QWidget *parent) :
   QNetworkProxyFactory::setUseSystemConfiguration(true);
   //QNetworkAccessManager::setCookieJar(new CookieJar(this));
 
+  StorageManager* storage = new StorageManager(this);
+
   //View
-  CookieJar* cj = new CookieJar(this);
   view = new QWebView(this);
-  view->page()->networkAccessManager()->setCookieJar(cj);
+  view->page()->networkAccessManager()->setCookieJar(storage->cookieJar());
   view->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
   view->settings()->setAttribute(QWebSettings::JavaEnabled, true);
   view->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
@@ -20,7 +21,7 @@ Browser::Browser(int argc,char** argv,QWidget *parent) :
   view->settings()->setAttribute(QWebSettings::AutoLoadImages, true);
 
   //Commandbar
-  command_bar = new CommandBar(this);
+  command_bar = new CommandBar(storage, this);
   connect(command_bar, SIGNAL(triggerUrl(QUrl)), SLOT(setUrl(QUrl)));
 
   //action and shortcuts for open commandbar
