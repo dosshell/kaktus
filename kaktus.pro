@@ -18,7 +18,8 @@ SOURCES += main.cpp\
     commandbar.cpp \
     cookiejar.cpp \
     storagemanager.cpp \
-    historylist.cpp
+    historylist.cpp \
+    config.cpp
 
 HEADERS  += \
     storagemanager.hpp \
@@ -26,6 +27,7 @@ HEADERS  += \
     commandbar.hpp \
     browser.hpp \
     cookiejar.hpp \
-    historylist.hpp
+    historylist.hpp \
+    config.hpp
 
 OTHER_FILES +=

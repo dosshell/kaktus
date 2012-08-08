@@ -31,6 +31,8 @@ Browser::Browser(int argc,char** argv,QWidget *parent) :
   //open_cb->setShortcuts(ocb_l);
   //addAction(open_cb);
 
+  Config* cfg = new Config(this);
+
   QShortcut* open_cb = new QShortcut(QKeySequence(Qt::Key_L + Qt::CTRL), this);
   QShortcut* exec_cb = new QShortcut(QKeySequence("#"), this);
   QShortcut* set_cb = new QShortcut(QKeySequence(":"), this);
