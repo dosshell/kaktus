@@ -3,8 +3,6 @@
 
 int main(int argc, char *argv[])
 {
-
-
   QApplication q_application(argc, argv);
   QCoreApplication::setOrganizationName("kaktus");
   QCoreApplication::setApplicationName("kaktus");
