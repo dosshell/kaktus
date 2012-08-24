@@ -13,6 +13,7 @@ class MainWindow : public QMainWindow
     ~MainWindow();
 
   private:
+    void closeEvent(QCloseEvent *event);
     Browser *browser;
 };
 

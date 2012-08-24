@@ -12,3 +12,10 @@ MainWindow::~MainWindow()
 {
 
 }
+
+void MainWindow::closeEvent(QCloseEvent *event)
+{
+  QSettings q;
+  q.sync();
+  event->accept();
+}

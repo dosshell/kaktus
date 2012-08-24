@@ -9,7 +9,7 @@
 #include <QAction>
 #include <QShortcut>
 #include <cookiejar.hpp>
-#include "config.hpp"
+#include <settings.hpp>
 
 class Browser : public QWidget
 {

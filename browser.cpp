@@ -13,12 +13,37 @@ Browser::Browser(int argc,char** argv,QWidget *parent) :
 
   //View
   view = new QWebView(this);
+
+  Settings q;
+
   view->page()->networkAccessManager()->setCookieJar(storage->cookieJar());
-  view->settings()->setAttribute(QWebSettings::PluginsEnabled, true);
-  view->settings()->setAttribute(QWebSettings::JavaEnabled, true);
-  view->settings()->setAttribute(QWebSettings::JavascriptEnabled, true);
-  view->settings()->setAttribute(QWebSettings::WebGLEnabled, true);
-  view->settings()->setAttribute(QWebSettings::AutoLoadImages, true);
+
+  view->settings()->setAttribute(QWebSettings::AutoLoadImages,                    q.valueAndUpdate("auto_load_images",                          true).toBool());
+  view->settings()->setAttribute(QWebSettings::DnsPrefetchEnabled,                q.valueAndUpdate("dns_prefetch",                              false).toBool());
+  view->settings()->setAttribute(QWebSettings::JavascriptEnabled,                 q.valueAndUpdate("javascript/enabled",                        false).toBool());
+  view->settings()->setAttribute(QWebSettings::JavaEnabled,                       q.valueAndUpdate("java/enabled",                              false).toBool());
+  view->settings()->setAttribute(QWebSettings::PluginsEnabled,                    q.valueAndUpdate("plugins/enabled",                           false).toBool());
+  view->settings()->setAttribute(QWebSettings::PrivateBrowsingEnabled,            q.valueAndUpdate("private_browsing",                          false).toBool());
+  view->settings()->setAttribute(QWebSettings::WebGLEnabled,                      q.valueAndUpdate("webgl/enabled",                             false).toBool());
+  view->settings()->setAttribute(QWebSettings::JavascriptCanOpenWindows,          q.valueAndUpdate("javascript/can_open_windows",               false).toBool());
+  view->settings()->setAttribute(QWebSettings::AcceleratedCompositingEnabled,     q.valueAndUpdate("javascript/can_close_windows",              false).toBool());
+  view->settings()->setAttribute(QWebSettings::JavascriptCanAccessClipboard,      q.valueAndUpdate("javascript/can_access_clipboard",           false).toBool());
+  view->settings()->setAttribute(QWebSettings::DeveloperExtrasEnabled,            q.valueAndUpdate("dev_features",                              false).toBool());
+  view->settings()->setAttribute(QWebSettings::SpatialNavigationEnabled,          q.valueAndUpdate("navigation/spatial_navigation",             false).toBool());
+  view->settings()->setAttribute(QWebSettings::LinksIncludedInFocusChain,         q.valueAndUpdate("navigation/links_included_in_focus_chain",  false).toBool());
+  view->settings()->setAttribute(QWebSettings::ZoomTextOnly,                      q.valueAndUpdate("navigation/zoom_text_only",                 false).toBool());
+  view->settings()->setAttribute(QWebSettings::PrintElementBackgrounds,           q.valueAndUpdate("print_element_backgrounds",                 true).toBool());
+  view->settings()->setAttribute(QWebSettings::OfflineStorageDatabaseEnabled,     q.valueAndUpdate("html5/offline_storage_database",            false).toBool());
+  view->settings()->setAttribute(QWebSettings::OfflineWebApplicationCacheEnabled, q.valueAndUpdate("html5/offline_web_application_chache",      false).toBool());
+  view->settings()->setAttribute(QWebSettings::LocalStorageEnabled,               q.valueAndUpdate("html5/locale_storage",                      false).toBool());
+  view->settings()->setAttribute(QWebSettings::LocalContentCanAccessRemoteUrls,   q.valueAndUpdate("local_content/can_access_remote_urls",      false).toBool());
+  view->settings()->setAttribute(QWebSettings::LocalContentCanAccessFileUrls,     q.valueAndUpdate("local_content/can_access_file_urls",        false).toBool());
+  view->settings()->setAttribute(QWebSettings::XSSAuditingEnabled,                q.valueAndUpdate("xxs_auditing_enabled",                      false).toBool());
+  view->settings()->setAttribute(QWebSettings::AcceleratedCompositingEnabled,     q.valueAndUpdate("rendering/use_cached_animation",            true).toBool());
+  view->settings()->setAttribute(QWebSettings::TiledBackingStoreEnabled,          q.valueAndUpdate("rendering/accelerate_page_as_bitmap",       false).toBool());
+  view->settings()->setAttribute(QWebSettings::FrameFlatteningEnabled,            q.valueAndUpdate("frame_flatting",                            false).toBool());
+  view->settings()->setAttribute(QWebSettings::SiteSpecificQuirksEnabled,         q.valueAndUpdate("site_specific_quirks",                      false).toBool());
+  q.sync();
 
   //Commandbar
   command_bar = new CommandBar(storage, this);
@@ -30,8 +55,6 @@ Browser::Browser(int argc,char** argv,QWidget *parent) :
   //ocb_l << QKeySequence(Qt::CTRL + Qt::Key_L) << QKeySequence(Qt::SHIFT + Qt::Key_Period);
   //open_cb->setShortcuts(ocb_l);
   //addAction(open_cb);
-
-  Config* cfg = new Config(this);
 
   QShortcut* open_cb = new QShortcut(QKeySequence(Qt::Key_L + Qt::CTRL), this);
   QShortcut* exec_cb = new QShortcut(QKeySequence("#"), this);
@@ -62,12 +85,14 @@ Browser::Browser(int argc,char** argv,QWidget *parent) :
   if(argc > 1)
     setUrl(QUrl(argv[1]));
   else
-    setUrl(QUrl("https://www.google.com"));
+    setUrl(QUrl(q.value("homepage", "https://www.google.se").toString()));
 }
 
 void Browser::updateWindowTitle(int progress)
 {
-  if (progress <= 0 || progress >= 100)
+  if (progress <= 0
+
+|| progress >= 100)
     setWindowTitle(view->title());
   else
     setWindowTitle(QString("%1 (%2%)").arg(view->title()).arg(progress));
